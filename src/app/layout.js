@@ -13,7 +13,7 @@ const MedusaClient = ({ children }) => {
         <MedusaProvider
             queryClientProviderProps={{ client: queryClient }}
             baseUrl={
-                process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:9000'
+                'https://dmb-api.onrender.com'
             }
         >
             {children}
