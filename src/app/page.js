@@ -7,6 +7,7 @@ const HomePage = () => {
     console.log(token);
     return (
         <div className="flex min-h-screen items-center justify-center">
+            test
             <LoginCard />
         </div>
     );
