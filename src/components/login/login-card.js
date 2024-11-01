@@ -9,91 +9,76 @@ import {
     FormMessage,
 } from '../ui/form';
 import { set, useForm } from 'react-hook-form';
-import { useAdminGetSession, useAdminLogin } from 'medusa-react';
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '../ui/use-toast';
-import { useAuthStore } from '@/store/auth-store';
-import { getToken } from '@/lib/data';
-import Spinner from '../common/spinner';
+import { useAuth } from '@/hook/useAuth';
+import { Loader2, Lock, User } from 'lucide-react';
+import { Button } from '../ui/button';
+import { getProducts } from '@/api/products/api';
+import { getProductCategories } from '@/api/product-categories/api';
 
 const LoginCard = () => {
     const router = useRouter();
-    const { user, isLoading } = useAdminGetSession();
-    if (user) {
-        router.push('/products');
-    }
-    const { toast } = useToast();
-    const [error, setError] = useState(false);
-    const [isLoginLoading, setIsLoginLoading] = useState(false);
+    const { isLoading, err, login } = useAuth();
 
-    const { setToken } = useAuthStore();
+    const { toast } = useToast();
 
     const form = useForm({
         defaultValues: {
-            username: '',
+            email: '',
             password: '',
         },
     });
-    const adminLogin = useAdminLogin();
 
-    const handleLogin = (email, password) => {
-        setIsLoginLoading(true);
-        adminLogin.mutate(
-            {
-                email,
-                password,
-            },
-            {
-                onSuccess: async () => {
-                    setIsLoginLoading(false);
-                    setError(false);
-                    console.log('login success');
-                    router.push('/products');
-                    toast({
-                        title: 'Đăng nhập thành công',
-                        description: 'Chào mừng bạn đến với DMB Industrial',
-                    });
-                    const token = await getToken({ email, password });
-                    console.log('token', token);
-                    setToken(token);
-                },
-                onError: (error) => {
-                    console.log('login error', error);
-                    setError(true);
-                },
-            }
-        );
+    const handleLogin = ({ email, password }) => {
+        login(email, password);
     };
+
     return (
-        <Card className="m-auto w-[400px]">
-            <CardHeader>
-                <CardTitle>DMB Industrial</CardTitle>
+        <Card className="mx-auto w-[400px] shadow-lg">
+            <Button
+                onClick={async () => {
+                    const categories = await getProductCategories();
+                    console.log(categories);
+                }}
+            >
+                Get Products
+            </Button>
+            <CardHeader className="space-y-1">
+                <div className="mb-2 flex items-center justify-center">
+                    <Lock className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle className="text-center text-2xl font-bold">
+                    DMB Industrial
+                </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="grid gap-4">
                 <Form {...form}>
                     <form
-                        onSubmit={form.handleSubmit((data) => {
-                            handleLogin(data.username, data.password);
-                        })}
+                        onSubmit={form.handleSubmit(handleLogin)}
                         className="space-y-4"
                     >
                         <FormField
                             control={form.control}
-                            name="username"
+                            name="email"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Tên đăng nhập</FormLabel>
                                     <FormControl>
-                                        <Input
-                                            placeholder="shop@gmail.com"
-                                            {...field}
-                                        />
+                                        <div className="relative">
+                                            <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                            <Input
+                                                value=""
+                                                className="pl-10"
+                                                placeholder="shop@gmail.com"
+                                                {...field}
+                                            />
+                                        </div>
                                     </FormControl>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
-
                         <FormField
                             control={form.control}
                             name="password"
@@ -101,24 +86,41 @@ const LoginCard = () => {
                                 <FormItem>
                                     <FormLabel>Mật khẩu</FormLabel>
                                     <FormControl>
-                                        <Input
-                                            type="password"
-                                            placeholder="********"
-                                            {...field}
-                                        />
+                                        <div className="relative">
+                                            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                            <Input
+                                                className="pl-10"
+                                                type="password"
+                                                placeholder="********"
+                                                value=""
+                                                {...field}
+                                            />
+                                        </div>
                                     </FormControl>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        {error && (
-                            <FormMessage type="error">
+
+                        {err && (
+                            <FormMessage className="text-center">
                                 Tên đăng nhập hoặc mật khẩu không đúng
                             </FormMessage>
                         )}
-                        <button name="data" className="btn btn-primary w-full">
-                            {isLoginLoading && <Spinner />}
-                            Đăng nhập
-                        </button>
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Đang xử lý
+                                </>
+                            ) : (
+                                'Đăng nhập'
+                            )}
+                        </Button>
                     </form>
                 </Form>
             </CardContent>
