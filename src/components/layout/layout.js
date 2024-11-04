@@ -30,30 +30,25 @@ import {
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Navigation from '../common/navigation';
-import {
-    useAdminDeleteSession,
-    useAdminGetSession,
-    useAdminUser,
-} from 'medusa-react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hook/useAuth';
+import { useSession } from '@/api/session/hook';
 
 function Layout({ children }) {
     const router = useRouter();
-    const { user, isLoading } = useAdminGetSession();
-    const adminLogout = useAdminDeleteSession();
+    const { err, isLoading: isGettingSession, data: session } = useSession();
+    const { err: authErr, isLoading: isAuthLoading, login, logout } = useAuth();
 
     const handleLogout = () => {
-        adminLogout.mutate(undefined, {
-            onSuccess: () => {
-                window.location.href = '/';
-            },
-        });
+        logout();
+        window.location.href = '/';
     };
-    if (!isLoading && !user) {
+
+    if (!isGettingSession && !session) {
         window.location.href = '/';
     }
 
-    if (isLoading) {
+    if (isGettingSession || isAuthLoading) {
         return (
             <div className="flex h-screen w-screen items-center justify-center">
                 <span className="loading loading-spinner text-green-500"></span>
@@ -172,11 +167,7 @@ function Layout({ children }) {
                             <DropdownMenuItem>Settings</DropdownMenuItem>
                             <DropdownMenuItem>Support</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                                onClick={() => {
-                                    handleLogout();
-                                }}
-                            >
+                            <DropdownMenuItem onClick={handleLogout}>
                                 Logout
                             </DropdownMenuItem>
                         </DropdownMenuContent>

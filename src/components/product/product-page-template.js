@@ -7,21 +7,19 @@ import { Ellipsis, PlusCircle } from 'lucide-react';
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from '../ui/table';
-import { useAdminProducts } from 'medusa-react';
 import CategoriesCollapse from './categories-collapse';
 import ProductItemOptions from './product-item-option';
 import { Badge } from '../ui/badge';
 import Spinner from '../common/spinner';
+import { useProducts } from '@/api/products/hook';
 
 const ProductPageTemplate = () => {
-    const { products, isLoading } = useAdminProducts();
-    console.log(products);
+    const { isLoading, error, data: products } = useProducts();
 
     return (
         <Layout>

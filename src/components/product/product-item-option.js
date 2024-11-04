@@ -11,14 +11,11 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { useAdminDeleteProduct, useAdminUpdateProduct } from 'medusa-react';
 import Link from 'next/link';
 import { useToast } from '../ui/use-toast';
 
 const ProductItemOptions = ({ id, status }) => {
     const { toast } = useToast();
-    const deleteProduct = useAdminDeleteProduct(id);
-    const updateProduct = useAdminUpdateProduct(id);
 
     const handleUpdate = (data) => {
         updateProduct.mutate(data, {

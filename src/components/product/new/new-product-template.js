@@ -17,7 +17,6 @@ import CategoriesSelector from './categories-selector';
 import { useState } from 'react';
 import ImageUpload from '@/components/common/image-upload';
 import TextEditor from '@/components/common/text-editor';
-import { useAdminCreateProduct } from 'medusa-react';
 import {
     formatHandle,
     formatNumber,

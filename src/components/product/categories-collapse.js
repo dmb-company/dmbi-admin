@@ -7,6 +7,7 @@ import {
 
 const CategoriesCollapse = ({ categories }) => {
     const [isOpen, setIsOpen] = useState(false);
+    if (!categories) return;
     return (
         <Collapsible>
             <CollapsibleTrigger>{categories[0]?.name}</CollapsibleTrigger>

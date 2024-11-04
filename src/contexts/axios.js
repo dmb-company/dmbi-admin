@@ -39,7 +39,7 @@ instance.interceptors.response.use(
 
 const refreshTokenFunction = () => {
     const res = instance
-        .post('/refreshToken', {
+        .post('/admin/refreshToken', {
             refreshToken: localStorage.getItem(REFRESH_TOKEN),
         })
         .then(({ data }) => {

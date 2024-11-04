@@ -1,4 +1,3 @@
-import { useAdminProductTags } from 'medusa-react';
 import { Label } from '@/components/ui/label';
 import { Combobox } from '@/components/common';
 import { useEffect, useState } from 'react';

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { MultiSelect } from 'react-multi-select-component';
-import { useAdminProductCategories } from 'medusa-react';
 import { Combobox } from '@/components/common';
 
 const CategoriesSelector = ({ categories, setCategories, oldCategories }) => {

@@ -4,24 +4,20 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 export const useAuth = () => {
-    const [err, setErr] = useState(null);
-    const [user, setUser] = useState(null);
+    const [err, setErr] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const { setToken, removeToken } = useAuthStore();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            setUser({
-                token,
-            });
             setToken(token);
         }
     }, [setToken]);
 
     const login = async (email, password) => {
         setIsLoading(true);
-        setErr(null);
+        setErr(false);
         try {
             await axios
                 .post(`${BASE_URL}/admin/login`, {
@@ -33,29 +29,31 @@ export const useAuth = () => {
                     const refreshToken = res?.data?.data?.refreshToken;
 
                     setToken(accessToken);
-                    setIsLoading(false);
                     localStorage.setItem(TOKEN, accessToken);
                     localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
-                    setUser({
-                        token: res.data.accessToken,
-                    });
+                    setErr(false);
                     return res;
                 });
+            // delay login time for best user experience
+            await new Promise((resolve) => setTimeout(resolve, 2000)).then(
+                () => {
+                    setIsLoading(false);
+                }
+            );
         } catch (error) {
             setIsLoading(false);
-            setErr(error);
+            setErr(true);
         }
     };
 
     const logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
         removeToken();
-        setUser(null);
     };
 
     return {
-        user,
         isLoading,
         err,
         login,

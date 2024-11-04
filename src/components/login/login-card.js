@@ -14,12 +14,12 @@ import { useToast } from '../ui/use-toast';
 import { useAuth } from '@/hook/useAuth';
 import { Loader2, Lock, User } from 'lucide-react';
 import { Button } from '../ui/button';
-import { getProducts } from '@/api/products/api';
-import { getProductCategories } from '@/api/product-categories/api';
+import { resolve } from 'styled-jsx/css';
+import { useState } from 'react';
 
 const LoginCard = () => {
     const router = useRouter();
-    const { isLoading, err, login } = useAuth();
+    const { err, isLoading, login } = useAuth();
 
     const { toast } = useToast();
 
@@ -30,20 +30,17 @@ const LoginCard = () => {
         },
     });
 
-    const handleLogin = ({ email, password }) => {
-        login(email, password);
+    const handleLogin = async ({ email, password }) => {
+        await login(email, password).then((res) => {
+            if (!isLoading && !err) {
+                router.push('/products');
+            }
+            return res;
+        });
     };
 
     return (
         <Card className="mx-auto w-[400px] shadow-lg">
-            <Button
-                onClick={async () => {
-                    const categories = await getProductCategories();
-                    console.log(categories);
-                }}
-            >
-                Get Products
-            </Button>
             <CardHeader className="space-y-1">
                 <div className="mb-2 flex items-center justify-center">
                     <Lock className="h-8 w-8 text-primary" />

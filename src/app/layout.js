@@ -2,22 +2,16 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import { MedusaProvider } from 'medusa-react';
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const inter = Inter({ subsets: ['latin'] });
 const queryClient = new QueryClient();
 
-const MedusaClient = ({ children }) => {
+const Client = ({ children }) => {
     return (
-        <MedusaProvider
-            queryClientProviderProps={{ client: queryClient }}
-            baseUrl={
-                'https://dmb-api.onrender.com'
-            }
-        >
+        <QueryClientProvider client={queryClient}>
             {children}
-        </MedusaProvider>
+        </QueryClientProvider>
     );
 };
 
@@ -26,7 +20,7 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body className={inter.className}>
                 <Toaster />
-                <MedusaClient>{children}</MedusaClient>
+                <Client>{children}</Client>
             </body>
         </html>
     );

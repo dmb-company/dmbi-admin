@@ -4,7 +4,6 @@ import Spinner from '@/components/common/spinner';
 import { Layout } from '@/components/layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
-import { useAdminProduct, useAdminUpdateProduct } from 'medusa-react';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { EditName } from '../edit';

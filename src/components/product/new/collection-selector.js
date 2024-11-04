@@ -12,7 +12,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { useAdminCollections } from 'medusa-react';
 
 const CollectionSelector = ({ form }) => {
     const { collections, isLoading } = useAdminCollections();
