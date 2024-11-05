@@ -7,3 +7,15 @@ export const getProducts = async () => {
 
     return products;
 };
+
+export const deleteProduct = async (id) => {
+    await instance
+        .delete('/admin/products', {
+            data: {
+                productId: id,
+            },
+        })
+        .then(({ data }) => {
+            return data;
+        });
+};

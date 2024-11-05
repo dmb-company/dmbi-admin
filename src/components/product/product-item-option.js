@@ -13,9 +13,13 @@ import {
 } from '../ui/dropdown-menu';
 import Link from 'next/link';
 import { useToast } from '../ui/use-toast';
+import { useDeleteProduct } from '@/api/products/hook';
+import { revalidatePath } from 'next/cache';
+import { useRouter } from 'next/navigation';
 
 const ProductItemOptions = ({ id, status }) => {
     const { toast } = useToast();
+    const { mutate: deleteProduct } = useDeleteProduct();
 
     const handleUpdate = (data) => {
         updateProduct.mutate(data, {
@@ -28,10 +32,15 @@ const ProductItemOptions = ({ id, status }) => {
     };
 
     const handleDelete = () => {
-        deleteProduct.mutate(void 0, {
-            onSuccess: ({ id, object, deleted }) => {
+        deleteProduct(id, {
+            onSuccess: () => {
                 toast({
-                    title: 'Xóa sản phẩm thành công',
+                    title: 'Đã xóa thành công sản phẩm!',
+                });
+            },
+            onError: () => {
+                toast({
+                    title: 'Đã có lỗi xảy ra!',
                 });
             },
         });
