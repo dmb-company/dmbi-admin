@@ -7,7 +7,6 @@ import { PencilLineIcon, ViewIcon } from 'lucide-react';
 import { useState } from 'react';
 
 const EditDescription = ({ handleUpdate, description: content }) => {
-    console.log(content);
     const { toast } = useToast();
     const [description, setDescription] = useState(content);
     return (

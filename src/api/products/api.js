@@ -39,3 +39,13 @@ export const createProduct = async (data) => {
             return data;
         });
 };
+
+export const updateProduct = async (id, data) => {
+    const updatedProduct = await instance
+        .patch(`/admin/products/${id}`, data)
+        .then(({ data }) => {
+            return data;
+        });
+
+    return updatedProduct;
+};

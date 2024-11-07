@@ -4,6 +4,7 @@ import {
     deleteProduct,
     getOneProduct,
     getProducts,
+    updateProduct,
 } from './api';
 import { staleTime, cacheTime } from '@/contexts/constants';
 import { useRouter } from 'next/navigation';
@@ -53,6 +54,20 @@ export const useProduct = (id) => {
         cacheTime,
         onError: (err) => {
             console.error('Error fetching one product: ', err);
+        },
+    });
+};
+
+export const useUpdateProduct = (id) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (data) => updateProduct(id, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries('products'); // Refresh product list
+        },
+        onError: (error) => {
+            console.error('Error updating product: ', error);
         },
     });
 };

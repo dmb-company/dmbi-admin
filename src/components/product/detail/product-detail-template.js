@@ -14,13 +14,27 @@ import {
     Images,
     Thumbnail,
 } from '../detail';
-import { useProduct } from '@/api/products/hook';
+import { useProduct, useUpdateProduct } from '@/api/products/hook';
 
 const ProductDetailTemplate = ({ params }) => {
     const { toast } = useToast();
     const { isLoading, error, data: product } = useProduct(params.id);
+    const { mutate: updateProduct } = useUpdateProduct(params.id);
 
-    const handleUpdate = (data) => {};
+    const handleUpdate = async (data) => {
+        updateProduct(data, {
+            onSuccess: () => {
+                toast({
+                    title: 'Đã cập nhật thành công sản phẩm!',
+                });
+            },
+            onError: () => {
+                toast({
+                    title: 'Đã có lỗi xảy ra!',
+                });
+            },
+        });
+    };
 
     return (
         <Layout>
