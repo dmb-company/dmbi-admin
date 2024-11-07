@@ -12,7 +12,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { set, useForm } from 'react-hook-form';
-import CollectionSelector from './collection-selector';
 import CategoriesSelector from './categories-selector';
 import { useState } from 'react';
 import ImageUpload from '@/components/common/image-upload';
@@ -25,10 +24,8 @@ import {
 } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
 import Spinner from '@/components/common/spinner';
-import { ToastAction } from '@/components/ui/toast';
-import { Link } from 'next/link';
-import { Label } from '@/components/ui/label';
 import ProductTagsSelector from './product-tags-selector';
+import { useCreateProduct } from '@/api/products/hook';
 
 const NewProductTemplate = () => {
     // Image state
@@ -44,7 +41,7 @@ const NewProductTemplate = () => {
     const form = useForm({
         defaultValues: {
             title: '',
-            origin_country: '',
+            originCountry: '',
             collection_id: '',
             tags: '',
             metadata: {
@@ -65,10 +62,10 @@ const NewProductTemplate = () => {
                 value: tag.trim(),
             }));
 
-        const tagValue =
+        const tagValues =
             newTags.length > 0
                 ? newTags.concat(
-                      tags.map((tag) => {
+                      tags?.map((tag) => {
                           if (tag.value.length === 0) {
                               return;
                           }
@@ -78,7 +75,7 @@ const NewProductTemplate = () => {
                           };
                       })
                   )
-                : tags.map((tag) => {
+                : tags?.map((tag) => {
                       if (tag.value.length === 0) {
                           return;
                       }
@@ -89,17 +86,12 @@ const NewProductTemplate = () => {
                   });
         return {
             title: data.title,
-            status: 'published',
-            is_giftcard: false,
-            discountable: false,
             description: description,
-            collection_id: data.collection_id,
-            tags: tagValue,
+            tags: tagValues,
             categories: categories,
-            handle: formatHandle(data.title),
-            images: await uploadFiles(images),
-            origin_country: data.origin_country,
-            thumbnail: await uploadFile(thumbnail),
+            // images: await uploadFiles(images),
+            originCountry: data.originCountry,
+            // thumbnail: await uploadFile(thumbnail),
             metadata: {
                 uses: data.metadata.uses,
                 model: data.metadata.model,
@@ -112,24 +104,23 @@ const NewProductTemplate = () => {
         };
     };
 
-    const createProduct = useAdminCreateProduct();
+    const { mutate: createProduct } = useCreateProduct();
 
-    const handleCreateProduct = (productData) => {
-        createProduct.mutate(productData, {
-            onSuccess: ({ product }) => {
-                toast({
-                    title: 'Thành công',
-                    description: `Sản phẩm ${product.title} đã được tạo!`,
-                });
-                setIsLoading(false);
-            },
-            onError: (error) => {
-                toast({
-                    title: 'Lỗi',
-                    description: 'Đã có lỗi xảy ra!',
-                });
-                setIsLoading(false);
-            },
+    const handleCreateProduct = async (productData) => {
+        await createPayload(productData).then((res) => {
+            console.log(res);
+            createProduct(res, {
+                onSuccess: () => {
+                    toast({
+                        title: 'Đã tạo thành công sản phẩm!',
+                    });
+                },
+                onError: () => {
+                    toast({
+                        title: 'Đã có lỗi xảy ra!',
+                    });
+                },
+            });
         });
     };
 
@@ -137,9 +128,7 @@ const NewProductTemplate = () => {
         <Layout>
             {isLoading && (
                 <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50">
-                    {/* <div className="rounded-lg bg-white p-4"> */}
                     <Spinner />
-                    {/* </div> */}
                 </div>
             )}
             <Card>
@@ -149,9 +138,8 @@ const NewProductTemplate = () => {
                 <CardContent>
                     <Form {...form}>
                         <form
-                            onSubmit={form.handleSubmit(async (data) => {
-                                setIsLoading(true);
-                                handleCreateProduct(await createPayload(data));
+                            onSubmit={form.handleSubmit((data) => {
+                                handleCreateProduct(data);
                             })}
                             className="space-y-8"
                         >
@@ -220,7 +208,7 @@ const NewProductTemplate = () => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="origin_country"
+                                    name="originCountry"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Xuất xứ</FormLabel>
@@ -305,9 +293,6 @@ const NewProductTemplate = () => {
                                         </FormItem>
                                     )}
                                 />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <CollectionSelector form={form} />
                                 <CategoriesSelector
                                     categories={categories}
                                     setCategories={setCategories}

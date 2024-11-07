@@ -2,7 +2,7 @@ import { instance } from '@/contexts/axios';
 
 export const getProductCategories = async () => {
     const categories = await instance
-        .get('/categories')
+        .get('/admin/categories')
         .then(({ data }) => {
             return data?.categories;
         })

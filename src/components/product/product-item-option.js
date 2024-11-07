@@ -14,8 +14,6 @@ import {
 import Link from 'next/link';
 import { useToast } from '../ui/use-toast';
 import { useDeleteProduct } from '@/api/products/hook';
-import { revalidatePath } from 'next/cache';
-import { useRouter } from 'next/navigation';
 
 const ProductItemOptions = ({ id, status }) => {
     const { toast } = useToast();

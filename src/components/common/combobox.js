@@ -56,7 +56,7 @@ const Combobox = ({ list, setList, oldList }) => {
                     <CommandList>
                         <CommandEmpty>Không có mục nào được chọn</CommandEmpty>
                         <CommandGroup>
-                            {list.map((item) => (
+                            {list?.map((item) => (
                                 <CommandItem
                                     key={item.value}
                                     value={item.value}

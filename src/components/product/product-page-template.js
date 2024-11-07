@@ -49,7 +49,6 @@ const ProductPageTemplate = () => {
                                     Tên hiển thị
                                 </TableHead>
                                 <TableHead>Danh mục</TableHead>
-                                <TableHead>Bộ sưu tập</TableHead>
                                 <TableHead>Trạng thái</TableHead>
                                 <TableHead>Giá</TableHead>
                                 <TableHead className="w-[50px] text-right"></TableHead>
@@ -72,17 +71,14 @@ const ProductPageTemplate = () => {
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        {product.collection?.title}
-                                    </TableCell>
-                                    <TableCell>
                                         <Badge
                                             className={`${
                                                 product.status === 'draft'
                                                     ? 'bg-yellow-500'
-                                                    : 'bg-green-500'
+                                                    : 'bg-green-600'
                                             }`}
                                         >
-                                            {product.status}
+                                            Mở bán
                                         </Badge>
                                     </TableCell>
                                     <TableCell>

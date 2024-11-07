@@ -1,10 +1,11 @@
 import { Label } from '@/components/ui/label';
 import { Combobox } from '@/components/common';
 import { useEffect, useState } from 'react';
+import { useProductTags } from '@/api/product-tags/hook';
 
 const ProductTagsSelector = ({ tags, setTags, oldTags }) => {
     const [selectedTags, setSelectedTags] = useState([]);
-    const { product_tags, isLoading } = useAdminProductTags();
+    const { isLoading, error, data: product_tags } = useProductTags();
 
     useEffect(() => {
         setTags(
@@ -18,12 +19,8 @@ const ProductTagsSelector = ({ tags, setTags, oldTags }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTags]);
 
-    if (isLoading) {
-        return <p>Loading...</p>;
-    }
-
     if (!isLoading && !product_tags) {
-        return;
+        return <div>Err</div>;
     }
 
     const options = product_tags?.map((c) => ({
@@ -35,7 +32,7 @@ const ProductTagsSelector = ({ tags, setTags, oldTags }) => {
         <div className="grid w-full grid-cols-1 space-y-2">
             <Label className="text-sm font-semibold">Tags</Label>
             <Combobox
-                list={product_tags.map((tag) => ({
+                list={product_tags?.map((tag) => ({
                     id: tag.id,
                     value: tag.value,
                 }))}

@@ -19,3 +19,13 @@ export const deleteProduct = async (id) => {
             return data;
         });
 };
+
+export const createProduct = async (data) => {
+    await instance
+        .post('/admin/products', {
+            ...data,
+        })
+        .then(({ data }) => {
+            return data;
+        });
+};

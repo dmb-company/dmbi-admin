@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { MultiSelect } from 'react-multi-select-component';
 import { Combobox } from '@/components/common';
+import { useProductCategories } from '@/api/product-categories/hook';
 
 const CategoriesSelector = ({ categories, setCategories, oldCategories }) => {
+    const {
+        isLoading,
+        error,
+        data: product_categories,
+    } = useProductCategories();
     const [selectedCategories, setSelectedCategories] = useState([]);
-    const { product_categories, isLoading } = useAdminProductCategories();
 
     useEffect(() => {
         setCategories(
@@ -19,7 +23,7 @@ const CategoriesSelector = ({ categories, setCategories, oldCategories }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCategories]);
 
-    if (isLoading) {
+    if (false) {
         return <p>Loading...</p>;
     }
 
