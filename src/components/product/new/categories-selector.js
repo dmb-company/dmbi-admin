@@ -8,6 +8,7 @@ const CategoriesSelector = ({ categories, setCategories, oldCategories }) => {
         error,
         data: product_categories,
     } = useProductCategories();
+
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     useEffect(() => {
@@ -23,8 +24,8 @@ const CategoriesSelector = ({ categories, setCategories, oldCategories }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCategories]);
 
-    if (false) {
-        return <p>Loading...</p>;
+    if (!isLoading && !product_categories) {
+        return <div>Err</div>;
     }
 
     const options = product_categories?.map((c) => ({
@@ -35,17 +36,19 @@ const CategoriesSelector = ({ categories, setCategories, oldCategories }) => {
     return (
         <div className="grid grid-cols-1 space-y-2">
             <label className="text-sm font-semibold">Danh mục</label>
-            <Combobox
-                list={product_categories?.map((category) => ({
-                    id: category.id,
-                    value: category.name,
-                }))}
-                oldList={oldCategories?.map((category) => ({
-                    id: category.id,
-                    value: category.name,
-                }))}
-                setList={setSelectedCategories}
-            />
+            {product_categories && (
+                <Combobox
+                    list={product_categories?.map((category) => ({
+                        id: category.id,
+                        value: category.name,
+                    }))}
+                    oldList={oldCategories?.map((category) => ({
+                        id: category.id,
+                        value: category.name,
+                    }))}
+                    setList={setSelectedCategories}
+                />
+            )}
         </div>
     );
 };

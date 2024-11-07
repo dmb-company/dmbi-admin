@@ -1,6 +1,6 @@
 'use client';
 
-import { uploadImageCloudinary } from '@/lib/cloudinary';
+import { uploadImagesToCloudinary } from '@/lib/cloudinary';
 import dynamic from 'next/dynamic';
 import { Label } from '../ui/label';
 
@@ -33,11 +33,11 @@ const TextEditor = ({
     const config = {
         events: {
             'image.beforeUpload': async function (images) {
-                await uploadImageCloudinary(images)
+                await uploadImagesToCloudinary(images)
                     .then((data) => {
                         // Insert the image into the editor
                         this.image.insert(
-                            data.secure_url,
+                            data[0].secure_url,
                             false,
                             null,
                             this.image.get(),

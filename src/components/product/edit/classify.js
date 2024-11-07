@@ -10,6 +10,7 @@ import CategoriesSelector from '../new/categories-selector';
 import { useToast } from '@/components/ui/use-toast';
 import ProductTagsSelector from '../new/product-tags-selector';
 import { Combobox } from '@/components/common';
+import { useProductCategories } from '@/api/product-categories/hook';
 
 const EditClassify = ({
     handleUpdate,

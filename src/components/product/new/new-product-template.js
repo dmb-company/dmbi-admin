@@ -86,10 +86,12 @@ const NewProductTemplate = () => {
             categories: categories,
             originCountry: data.originCountry,
             thumbnail: await uploadFiles(thumbnail).then((res) => res[0]?.url),
-            metadata: {
+            images: {
                 images: await uploadFiles(images).then((res) =>
                     res.map((image) => image.url)
                 ),
+            },
+            metadata: {
                 uses: data.metadata.uses,
                 model: data.metadata.model,
                 price: data.metadata.price,

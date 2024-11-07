@@ -20,6 +20,7 @@ const ProductDetailTemplate = ({ params }) => {
     const { toast } = useToast();
     const { isLoading, error, data: product } = useProduct(params.id);
     const { mutate: updateProduct } = useUpdateProduct(params.id);
+    console.log(product);
 
     const handleUpdate = async (data) => {
         updateProduct(data, {
@@ -100,7 +101,7 @@ const ProductDetailTemplate = ({ params }) => {
                         </div>
                         <div className="col-span-2">
                             <Images
-                                images={product?.metadata?.images}
+                                images={product?.images?.images}
                                 handleUpdate={handleUpdate}
                             />
                         </div>

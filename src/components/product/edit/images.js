@@ -29,8 +29,15 @@ const EditImages = ({ handleUpdate }) => {
                         toast({
                             title: 'Đang cập nhật ảnh sản phẩm...',
                         });
-                        const images_urls = await uploadFiles(images);
-                        handleUpdate({ images: images_urls });
+                        const images_urls = await uploadFiles(images).then(
+                            (res) => res.map((image) => image.url)
+                        );
+                        console.log(images_urls);
+                        handleUpdate({
+                            images: {
+                                images: images_urls,
+                            },
+                        });
                     })}
                     className="grid gap-4"
                 >
