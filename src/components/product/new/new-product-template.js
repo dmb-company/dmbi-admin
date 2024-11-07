@@ -16,12 +16,7 @@ import CategoriesSelector from './categories-selector';
 import { useState } from 'react';
 import ImageUpload from '@/components/common/image-upload';
 import TextEditor from '@/components/common/text-editor';
-import {
-    formatHandle,
-    formatNumber,
-    uploadFile,
-    uploadFiles,
-} from '@/lib/utils';
+import { formatNumber, uploadFiles } from '@/lib/utils';
 import { useToast } from '@/components/ui/use-toast';
 import Spinner from '@/components/common/spinner';
 import ProductTagsSelector from './product-tags-selector';
@@ -89,10 +84,12 @@ const NewProductTemplate = () => {
             description: description,
             tags: tagValues,
             categories: categories,
-            // images: await uploadFiles(images),
             originCountry: data.originCountry,
-            thumbnail: await uploadFile(thumbnail),
+            thumbnail: await uploadFiles(thumbnail).then((res) => res[0]?.url),
             metadata: {
+                images: await uploadFiles(images).then((res) =>
+                    res.map((image) => image.url)
+                ),
                 uses: data.metadata.uses,
                 model: data.metadata.model,
                 price: data.metadata.price,

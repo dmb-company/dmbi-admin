@@ -86,7 +86,7 @@ const ProductDetailTemplate = ({ params }) => {
                         </div>
                         <div className="col-span-2">
                             <Images
-                                images={product?.images}
+                                images={product?.metadata?.images}
                                 handleUpdate={handleUpdate}
                             />
                         </div>

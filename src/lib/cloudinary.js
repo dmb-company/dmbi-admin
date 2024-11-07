@@ -1,27 +1,30 @@
-export async function uploadImageCloudinary(images) {
-    const formData = new FormData();
+export async function uploadImagesToCloudinary(images) {
+    const uploadPromises = images.map(async (image) => {
+        const formData = new FormData();
 
-    // convert to webp
-    const webpImage = await convertToWebP(images[0]);
+        // Convert to WebP
+        const webpImage = await convertToWebP(image);
 
-    formData.append('file', webpImage);
+        formData.append('file', webpImage);
+        formData.append('upload_preset', 'preset-next-test');
 
-    formData.append('upload_preset', 'preset-next-test');
-
-    return await fetch(
-        'https://api.cloudinary.com/v1_1/dt3rk0j3l/image/upload',
-        {
+        // Upload image to Cloudinary
+        return fetch('https://api.cloudinary.com/v1_1/dt3rk0j3l/image/upload', {
             method: 'POST',
             body: formData,
-        }
-    )
-        .then((response) => response.json())
-        .then((data) => {
-            return data;
         })
-        .catch((error) => {
-            console.error('Image upload error:', error);
-        });
+            .then((response) => response.json())
+            .catch((error) => {
+                console.error('Image upload error:', error);
+                return null; // Return null if there's an error, to handle it later
+            });
+    });
+
+    // Wait for all uploads to complete
+    const uploadResults = await Promise.all(uploadPromises);
+
+    // Filter out any failed uploads (where the result is null)
+    return uploadResults.filter((result) => result !== null);
 }
 
 // Helper function to convert an image file to WebP
