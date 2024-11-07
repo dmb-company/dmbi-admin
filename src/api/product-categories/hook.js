@@ -5,6 +5,7 @@ import {
     deleteProductCategory,
     getOneProductCategory,
     getProductCategories,
+    updateProductCategory,
 } from './api';
 
 export const useProductCategories = () => {
@@ -33,7 +34,7 @@ export const useCreateProductCategory = () => {
     return useMutation({
         mutationFn: createProductCategory,
         onSuccess: () => {
-            queryClient.invalidateQueries('product-category');
+            queryClient.invalidateQueries('product-categories');
         },
         onError: (error) => {
             console.error('Error create product category: ', error);
@@ -47,7 +48,7 @@ export const useDeleteProductCategory = () => {
     return useMutation({
         mutationFn: deleteProductCategory,
         onSuccess: () => {
-            queryClient.invalidateQueries('product-category');
+            queryClient.invalidateQueries('product-categories');
         },
         onError: (error) => {
             console.error('Error delete product category: ', error);
@@ -57,4 +58,13 @@ export const useDeleteProductCategory = () => {
 
 export const useCategory = () => {};
 
-export const useUpdateCategory = () => {};
+export const useUpdateCategory = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (data) => updateProductCategory(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries('product-categories');
+        },
+    });
+};

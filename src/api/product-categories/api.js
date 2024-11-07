@@ -33,3 +33,9 @@ export const deleteProductCategory = async (id) => {
         },
     });
 };
+
+export const updateProductCategory = async (data) => {
+    await instance.patch(`/admin/categories`, {
+        ...data,
+    });
+};

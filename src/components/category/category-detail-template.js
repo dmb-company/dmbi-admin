@@ -6,12 +6,15 @@ import { Layout } from '@/components/layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormField, FormItem } from '@/components/ui/form';
 import { useToast } from '@/components/ui/use-toast';
-import { formatDate } from '@/lib/utils';
+import { formatDate, uploadFiles } from '@/lib/utils';
 import { Pencil } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useProductCategory } from '@/api/product-categories/hook';
+import {
+    useProductCategory,
+    useUpdateCategory,
+} from '@/api/product-categories/hook';
 
 const CategoryDetailTemplate = ({ params }) => {
     const { toast } = useToast();
@@ -20,6 +23,8 @@ const CategoryDetailTemplate = ({ params }) => {
         error,
         data: product_category,
     } = useProductCategory(params.id);
+    const { mutate: updateProductCategory, isLoading: isUpdateLoading } =
+        useUpdateCategory();
 
     const form = useForm({
         defaultValues: {
@@ -31,10 +36,33 @@ const CategoryDetailTemplate = ({ params }) => {
     const [files, setFiles] = useState([]);
     const [isSaving, setIsSaving] = useState(false);
 
-    const handleUpdateCategory = (
-        name = product_category?.name,
-        image = product_category?.metadata?.image
-    ) => {};
+    const handleUpdateCategory = (categoryId, name, image) => {
+        setIsSaving(true);
+        const data = {
+            categoryId,
+            name,
+            ...(image && {
+                metadata: {
+                    image,
+                },
+            }),
+        };
+
+        console.log(data);
+        updateProductCategory(data, {
+            onSuccess: () => {
+                setIsSaving(false);
+                toast({
+                    title: 'Cập nhật thành công!',
+                });
+            },
+            onError: () => {
+                toast({
+                    title: 'Đã có lỗi xảy ra!',
+                });
+            },
+        });
+    };
 
     useEffect(() => {
         if (!product_category) return;
@@ -84,12 +112,16 @@ const CategoryDetailTemplate = ({ params }) => {
                                     className="btn btn-primary w-full"
                                     onClick={form.handleSubmit(async (data) => {
                                         setIsSaving(true);
-                                        await uploadFile(files).then((res) => {
-                                            handleUpdateCategory(
-                                                data['name'],
-                                                res
-                                            );
-                                        });
+                                        const url = await uploadFiles(files)
+                                            .then((res) => res[0]?.url)
+                                            .then((url) => {
+                                                return url;
+                                            });
+                                        handleUpdateCategory(
+                                            params.id,
+                                            data['name'],
+                                            url
+                                        );
                                     })}
                                 >
                                     {isSaving && (

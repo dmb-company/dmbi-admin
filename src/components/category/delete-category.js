@@ -33,16 +33,6 @@ const CategoryDeleteButton = ({ id }) => {
     };
 
     return (
-        // <div className="m-[-10px] p-[-10px]">
-        //     <div className="mt-[25px] flex justify-around">
-        //         <button className="h-[50px] w-4/5 rounded bg-red-500"
-        //             onClick={() => {
-        //                 handleDelete()
-        //             }}
-        //         >Có
-        //         </button>
-        //     </div>
-        // </div>
         <AlertDialog>
             <AlertDialogTrigger className="mx-auto mt-[2px] h-[30px] w-full rounded bg-red-400 py-[4px] text-center align-middle">
                 Xóa
@@ -53,7 +43,7 @@ const CategoryDeleteButton = ({ id }) => {
                         Bạn có muốn xóa danh mục này?
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                        ⚠️Thao tác này không thể hoàn lại!
+                        Thao tác này không thể hoàn lại!
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter className="inline-block">
