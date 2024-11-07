@@ -1,16 +1,17 @@
 'use client';
-import { useAdminCreateProductCategory } from 'medusa-react';
 import { set, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Form, FormField, FormItem } from '../ui/form';
 import { Input } from '../ui/input';
 import ImageUpload from '../common/image-upload';
-import { formatHandle, uploadFile } from '@/lib/utils';
+import { formatHandle, uploadFile, uploadFiles } from '@/lib/utils';
 import { useToast } from '../ui/use-toast';
+import { useCreateProductCategory } from '@/api/product-categories/hook';
 const NewCategory = () => {
     const { toast } = useToast();
-    const createCategory = useAdminCreateProductCategory();
     const [isLoading, setIsLoading] = useState(false);
+
+    const { mutate: createProductCategory } = useCreateProductCategory();
 
     const form = useForm({
         defaultValues: {
@@ -24,21 +25,19 @@ const NewCategory = () => {
 
     const handleCreateCategory = (name, image) => {
         const handle = formatHandle(name);
-        createCategory.mutate(
+        createProductCategory(
             {
                 name,
                 handle,
-                is_active: true,
                 metadata: {
                     image: image,
                 },
             },
             {
-                onSuccess: ({ product_category }) => {
-                    console.log(product_category);
+                onSuccess: () => {
                     toast({
                         title: 'Tạo mới danh mục thành công',
-                        description: `Danh mục ${product_category.name} đã được tạo`,
+                        description: `Danh mục mới đã được tạo`,
                     });
                     setIsLoading(false);
                     form.reset();
@@ -72,12 +71,14 @@ const NewCategory = () => {
                     <button
                         onClick={form.handleSubmit(async (data) => {
                             setIsLoading(true);
-                            await uploadFile(files).then((url) => {
-                                handleCreateCategory(
-                                    data['category-name'],
-                                    url
-                                );
-                            });
+                            await uploadFiles(files)
+                                .then((res) => res[0].url)
+                                .then((url) => {
+                                    handleCreateCategory(
+                                        data['category-name'],
+                                        url
+                                    );
+                                });
                         })}
                         className="btn btn-primary w-full"
                     >

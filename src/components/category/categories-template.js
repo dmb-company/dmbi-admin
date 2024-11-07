@@ -2,7 +2,6 @@
 import NewCategory from '@/components/category/new-category';
 import DialogComponent from '@/components/common/dialog';
 import { Layout } from '@/components/layout';
-import { useAdminProductCategories } from 'medusa-react';
 import {
     Table,
     TableBody,
@@ -19,13 +18,16 @@ import CategoryItemOptions from '@/components/category/category-item-option';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React from 'react';
-import { useAdminDeleteProductCategory } from 'medusa-react';
 import { useToast } from '../ui/use-toast';
-import CategoryDeleteButton from './delete-category';
+import { useProductCategories } from '@/api/product-categories/hook';
 
 const CategoriesTemplate = () => {
-    const { product_categories, isLoading } = useAdminProductCategories();
     const { toast } = useToast();
+    const {
+        isLoading,
+        error,
+        data: product_categories,
+    } = useProductCategories();
 
     return (
         <Layout>

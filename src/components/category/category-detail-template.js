@@ -7,26 +7,24 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormField, FormItem } from '@/components/ui/form';
 import { useToast } from '@/components/ui/use-toast';
 import { formatDate } from '@/lib/utils';
-import { uploadFile } from '@/lib/utils';
-import { Car, Pencil } from 'lucide-react';
-import {
-    useAdminProductCategory,
-    useAdminUpdateProductCategory,
-} from 'medusa-react';
+import { Pencil } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import React, { useEffect, useState } from 'react';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import { useProductCategory } from '@/api/product-categories/hook';
 
 const CategoryDetailTemplate = ({ params }) => {
     const { toast } = useToast();
-    const { product_category, isLoading: isCategoryLoading } =
-        useAdminProductCategory(params.id);
+    const {
+        isLoading: isCategoryLoading,
+        error,
+        data: product_category,
+    } = useProductCategory(params.id);
 
-    const updateProductCategory = useAdminUpdateProductCategory(params.id);
     const form = useForm({
         defaultValues: {
             name: product_category?.name,
-            image: product_category?.metadata.image,
+            image: product_category?.metadata?.image,
         },
     });
 
@@ -35,32 +33,13 @@ const CategoryDetailTemplate = ({ params }) => {
 
     const handleUpdateCategory = (
         name = product_category?.name,
-        image = product_category?.metadata.image
-    ) => {
-        updateProductCategory.mutate(
-            {
-                name,
-                metadata: {
-                    image,
-                },
-            },
-            {
-                onSuccess: ({ product_category }) => {
-                    console.log(product_category);
-                    toast({
-                        title: 'Cập nhật danh mục thành công',
-                        description: `Danh mục ${product_category.name} đã được cập nhật`,
-                    });
-                    setIsSaving(false);
-                },
-            }
-        );
-    };
+        image = product_category?.metadata?.image
+    ) => {};
 
     useEffect(() => {
         if (!product_category) return;
-        form.setValue('name', product_category.name);
-        form.setValue('image', product_category.metadata.image);
+        form.setValue('name', product_category?.name);
+        // form.setValue('image', product_category.metadata.image);
     }, [isCategoryLoading, product_category, form]);
 
     return (

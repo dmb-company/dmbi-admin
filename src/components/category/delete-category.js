@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAdminDeleteProductCategory } from 'medusa-react';
 import { useToast } from '../ui/use-toast';
 import {
     AlertDialog,
@@ -12,21 +11,23 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { useDeleteProductCategory } from '@/api/product-categories/hook';
 
 const CategoryDeleteButton = ({ id }) => {
     const { toast } = useToast();
-    const deleteCategory = useAdminDeleteProductCategory(id);
+    const { mutate: deleteCategory } = useDeleteProductCategory();
 
     const handleDelete = () => {
-        deleteCategory.mutate(void 0, {
-            onSuccess: ({ id, object, deleted }) => {
-                console.log(id);
+        deleteCategory(id, {
+            onSuccess: () => {
                 toast({
                     title: 'Xóa thành công',
                 });
             },
             onError: ({ id }) => {
-                console.log(id);
+                toast({
+                    title: 'Xóa thất bại',
+                });
             },
         });
     };
@@ -43,8 +44,8 @@ const CategoryDeleteButton = ({ id }) => {
         //     </div>
         // </div>
         <AlertDialog>
-            <AlertDialogTrigger className="w-full mx-auto mt-[2px] h-[30px] rounded bg-red-400 py-[4px] text-center align-middle">
-                    Xóa
+            <AlertDialogTrigger className="mx-auto mt-[2px] h-[30px] w-full rounded bg-red-400 py-[4px] text-center align-middle">
+                Xóa
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
@@ -56,12 +57,14 @@ const CategoryDeleteButton = ({ id }) => {
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter className="inline-block">
-                    <AlertDialogCancel className="w-[49%] bg-gray-300 inline">Không</AlertDialogCancel>
+                    <AlertDialogCancel className="inline w-[49%] bg-gray-300">
+                        Không
+                    </AlertDialogCancel>
                     <AlertDialogAction
                         onClick={() => {
                             handleDelete();
                         }}
-                        className="w-[49%] inline"
+                        className="inline w-[49%]"
                     >
                         Có
                     </AlertDialogAction>

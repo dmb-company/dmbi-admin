@@ -1,7 +1,5 @@
-import { set } from 'react-hook-form';
 import { FormField, FormItem, FormLabel } from '../ui/form';
 import { useEffect, useState } from 'react';
-import { Input } from '../ui/input';
 import TooltipComponent from './tooltip';
 const ImageUpload = ({
     multiple = false,

@@ -5,7 +5,31 @@ export const getProductCategories = async () => {
         .get('/admin/categories')
         .then(({ data }) => {
             return data?.categories;
-        })
-        .catch((err) => console.log(err));
+        });
     return categories;
+};
+
+export const getOneProductCategory = async (id) => {
+    const category = await instance
+        .get(`/admin/categories/${id}`)
+        .then((res) => res.data);
+
+    return category;
+};
+
+export const createProductCategory = async (data) => {
+    const category = await instance
+        .post(`/admin/categories`, {
+            ...data,
+        })
+        .then((res) => res.data);
+    return category;
+};
+
+export const deleteProductCategory = async (id) => {
+    await instance.delete('/admin/categories', {
+        data: {
+            categoryId: id,
+        },
+    });
 };

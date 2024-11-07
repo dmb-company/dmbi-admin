@@ -15,21 +15,7 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-  } from "@/components/ui/alert-dialog"
 import Link from 'next/link';
-import { useAdminDeleteProductCategory } from 'medusa-react';
-import DialogComponent from '../common/dialog';
-import Category from './delete-category';
 import CategoryDeleteButton from './delete-category';
 
 const CategoryItemOptions = ({ id }) => {
