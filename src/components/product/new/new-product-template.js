@@ -91,7 +91,7 @@ const NewProductTemplate = () => {
             categories: categories,
             // images: await uploadFiles(images),
             originCountry: data.originCountry,
-            // thumbnail: await uploadFile(thumbnail),
+            thumbnail: await uploadFile(thumbnail),
             metadata: {
                 uses: data.metadata.uses,
                 model: data.metadata.model,

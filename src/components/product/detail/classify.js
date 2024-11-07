@@ -3,13 +3,12 @@ import { EditClassify } from '../edit';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 
-const Classify = ({ collection, categories, tags, handleUpdate }) => {
+const Classify = ({ categories, tags, handleUpdate }) => {
     return (
         <div>
             <h2 className="my-2 flex items-center text-xl font-semibold">
                 <EditClassify
                     handleUpdate={handleUpdate}
-                    collection={collection}
                     categories={categories}
                     tags={tags}
                 />
@@ -24,10 +23,7 @@ const Classify = ({ collection, categories, tags, handleUpdate }) => {
                             .join(', ')}
                     </span>
                 </div>
-                <div>
-                    <Label>Bộ sản phẩm: </Label>
-                    <span>{collection?.title}</span>
-                </div>
+
                 <div>
                     <Label>Tags: </Label>
                     <span className="space-x-2">

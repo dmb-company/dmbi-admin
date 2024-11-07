@@ -13,7 +13,6 @@ import { Combobox } from '@/components/common';
 
 const EditClassify = ({
     handleUpdate,
-    collection,
     categories: oldCategories,
     tags: oldTags,
 }) => {
@@ -21,14 +20,11 @@ const EditClassify = ({
     const [tags, setTags] = useState([]);
     const [categories, setCategories] = useState([]);
     const form = useForm({
-        defaultValues: {
-            collection_id: collection?.id || '',
-        },
+        defaultValues: {},
     });
 
     const createPayload = (data) => {
         return {
-            collection_id: data.collection_id,
             categories: categories,
             tags: tags,
         };
@@ -60,7 +56,6 @@ const EditClassify = ({
                             setCategories={setCategories}
                             oldCategories={oldCategories}
                         />
-                        <CollectionSelector form={form} />
                         <ProductTagsSelector
                             tags={tags}
                             setTags={setTags}

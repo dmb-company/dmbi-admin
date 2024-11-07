@@ -1,5 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createProduct, deleteProduct, getProducts } from './api';
+import {
+    createProduct,
+    deleteProduct,
+    getOneProduct,
+    getProducts,
+} from './api';
 import { staleTime, cacheTime } from '@/contexts/constants';
 import { useRouter } from 'next/navigation';
 
@@ -38,6 +43,16 @@ export const useCreateProduct = () => {
         },
         onError: (error) => {
             console.error('Error creating product: ', error);
+        },
+    });
+};
+
+export const useProduct = (id) => {
+    return useQuery(['product', id], () => getOneProduct(id), {
+        staleTime,
+        cacheTime,
+        onError: (err) => {
+            console.error('Error fetching one product: ', err);
         },
     });
 };

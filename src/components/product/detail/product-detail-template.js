@@ -14,26 +14,13 @@ import {
     Images,
     Thumbnail,
 } from '../detail';
+import { useProduct } from '@/api/products/hook';
 
 const ProductDetailTemplate = ({ params }) => {
     const { toast } = useToast();
-    const { product, isLoading } = useAdminProduct(params.id);
-    const updateProduct = useAdminUpdateProduct(params.id);
+    const { isLoading, error, data: product } = useProduct(params.id);
 
-    const handleUpdate = (data) => {
-        updateProduct.mutate(data, {
-            onSuccess: ({ product }) => {
-                toast({
-                    title: 'Cập nhật sản phẩm thành công',
-                });
-            },
-            onError: (error) => {
-                toast({
-                    title: 'Cập nhật sản phẩm thất bại',
-                });
-            },
-        });
-    };
+    const handleUpdate = (data) => {};
 
     return (
         <Layout>
@@ -44,15 +31,7 @@ const ProductDetailTemplate = ({ params }) => {
                             <EditName handleUpdate={handleUpdate} />
                             {product?.title}
                         </CardTitle>
-                        <Badge
-                            className={`${
-                                product?.status === 'published'
-                                    ? 'bg-green-500'
-                                    : 'bg-red-500'
-                            }`}
-                        >
-                            {product?.status}
-                        </Badge>
+                        <Badge className={`${'bg-green-500'}`}>Mở bán</Badge>
                     </div>
                     <Separator />
                 </CardHeader>
@@ -68,7 +47,6 @@ const ProductDetailTemplate = ({ params }) => {
                                 handleUpdate={handleUpdate}
                             />
                             <Classify
-                                collection={product?.collection}
                                 categories={product?.categories}
                                 tags={product?.tags}
                                 handleUpdate={handleUpdate}

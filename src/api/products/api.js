@@ -8,6 +8,16 @@ export const getProducts = async () => {
     return products;
 };
 
+export const getOneProduct = async (id) => {
+    const product = await instance
+        .get(`/admin/products/${id}`)
+        .then(({ data }) => {
+            return data;
+        });
+
+    return product;
+};
+
 export const deleteProduct = async (id) => {
     await instance
         .delete('/admin/products', {

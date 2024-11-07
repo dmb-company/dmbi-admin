@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { medusaClient } from '@/lib/config';
+import { uploadImageCloudinary } from './cloudinary';
 
 export function cn(...inputs) {
     return twMerge(clsx(inputs));
@@ -35,12 +36,9 @@ export const formatHandle = (handle) => {
 };
 
 export const uploadFile = async (file) => {
-    const url = await medusaClient.admin.uploads
-        .create(file)
-        .then(({ uploads }) => uploads[0]?.url)
-        .catch((error) => {
-            console.log(error);
-        });
+    const url = await uploadImageCloudinary(file)
+        .then(({ url }) => url)
+        .catch((err) => console.log(err));
     return url;
 };
 

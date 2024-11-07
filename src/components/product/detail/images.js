@@ -9,7 +9,7 @@ const Images = ({ images, handleUpdate }) => {
                 <span>Images</span>
             </h2>
             <div className="grid grid-cols-4 gap-4">
-                {images?.map((image, index) => (
+                {/* {images?.map((image, index) => (
                     <div key={index}>
                         <img
                             src={image.url}
@@ -17,7 +17,7 @@ const Images = ({ images, handleUpdate }) => {
                             className="w-full rounded-md border-2 border-gray-200 object-cover"
                         />
                     </div>
-                ))}
+                ))} */}
             </div>
         </div>
     );
