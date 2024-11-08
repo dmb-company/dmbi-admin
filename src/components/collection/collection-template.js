@@ -2,7 +2,6 @@
 import { Layout } from '@/components/layout';
 import DialogComponent from '@/components/common/dialog';
 import NewCollectionCard from '@/components/collection/new-collection';
-import { useAdminCollections } from 'medusa-react';
 import {
     Table,
     TableBody,

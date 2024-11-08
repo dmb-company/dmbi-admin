@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 
 const Classify = ({ categories, tags, handleUpdate }) => {
+    console.log(categories);
     return (
         <div>
             <h2 className="my-2 flex items-center text-xl font-semibold">

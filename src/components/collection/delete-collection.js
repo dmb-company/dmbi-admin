@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAdminDeleteCollection } from 'medusa-react';
 import { useToast } from '../ui/use-toast';
 import {
     AlertDialog,
@@ -14,17 +13,16 @@ import {
 } from '@/components/ui/alert-dialog';
 
 const CollectionDeleteButton = ({ id }) => {
-    const {toast} = useToast();
-    const  deleteCollection =
-        useAdminDeleteCollection(id);
+    const { toast } = useToast();
+    const deleteCollection = useAdminDeleteCollection(id);
 
     const handleDelete = () => {
         deleteCollection.mutate(void 0, {
             onSuccess: ({ id, object, deleted }) => {
                 console.log(id);
                 toast({
-                    title: "Xóa thành công"
-                })
+                    title: 'Xóa thành công',
+                });
             },
             onError: ({ id }) => {
                 console.log(id);
@@ -34,8 +32,8 @@ const CollectionDeleteButton = ({ id }) => {
 
     return (
         <AlertDialog>
-            <AlertDialogTrigger className="w-full mx-auto mt-[2px] h-[30px] rounded bg-red-400 py-[4px] text-center align-middle">
-                    Xóa
+            <AlertDialogTrigger className="mx-auto mt-[2px] h-[30px] w-full rounded bg-red-400 py-[4px] text-center align-middle">
+                Xóa
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
@@ -47,12 +45,14 @@ const CollectionDeleteButton = ({ id }) => {
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter className="inline-block">
-                    <AlertDialogCancel className="w-[49%] bg-gray-300 inline">Không</AlertDialogCancel>
+                    <AlertDialogCancel className="inline w-[49%] bg-gray-300">
+                        Không
+                    </AlertDialogCancel>
                     <AlertDialogAction
                         onClick={() => {
                             handleDelete();
                         }}
-                        className="w-[49%] inline"
+                        className="inline w-[49%]"
                     >
                         Có
                     </AlertDialogAction>
@@ -62,4 +62,4 @@ const CollectionDeleteButton = ({ id }) => {
     );
 };
 
-export default CollectionDeleteButton
+export default CollectionDeleteButton;

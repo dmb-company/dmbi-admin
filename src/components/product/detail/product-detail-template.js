@@ -20,6 +20,7 @@ const ProductDetailTemplate = ({ params }) => {
     const { toast } = useToast();
     const { isLoading, error, data: product } = useProduct(params.id);
     const { mutate: updateProduct } = useUpdateProduct(params.id);
+
     console.log(product);
 
     const handleUpdate = async (data) => {

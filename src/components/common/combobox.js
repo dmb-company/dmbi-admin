@@ -41,7 +41,7 @@ const Combobox = ({ list, setList, oldList }) => {
                 >
                     <ChevronsUpDown className="mr-2 h-4 w-4 shrink-0 opacity-50" />
                     <span className="truncate">
-                        {value.length > 0
+                        {list?.length > 0
                             ? list
                                   .filter((item) => value.includes(item.value))
                                   .map((item) => item.value)
