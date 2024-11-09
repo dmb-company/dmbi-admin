@@ -27,6 +27,7 @@ const PartnersTemplate = () => {
     const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
     const handleDeletePartner = (id) => {
+        console.log(id);
         setIsDeleteLoading(true);
         deletePartner(id, {
             onSuccess: () => {
@@ -77,7 +78,7 @@ const PartnersTemplate = () => {
                                         <TableHead className="w-1/4 min-w-[150px]">
                                             Tên
                                         </TableHead>
-                                        <TableHead className="w-4/5 hidden md:block lg:flex items-center">
+                                        <TableHead className="hidden w-4/5 items-center md:block lg:flex">
                                             Ảnh
                                         </TableHead>
                                         <TableHead className="w-1/5"></TableHead>
@@ -93,11 +94,11 @@ const PartnersTemplate = () => {
                                                 <TableCell className="w-1/4 min-w-[150px] font-medium">
                                                     {partner.name}
                                                 </TableCell>
-                                                <TableCell className="w-4/5 hidden md:block lg:flex items-center">
+                                                <TableCell className="hidden w-4/5 items-center md:block lg:flex">
                                                     <img
                                                         src={partner.image_url}
                                                         alt={partner.name}
-                                                        className="h-1/4 min-h-[100px] max-h-[350px] w-full border-2 object-cover"
+                                                        className="h-1/4 max-h-[350px] min-h-[100px] w-full border-2 object-cover"
                                                     />
                                                 </TableCell>
                                                 <TableCell className="text-right">

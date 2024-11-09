@@ -2,9 +2,9 @@ import { instance } from '@/contexts/axios';
 
 export const getPartners = async () => {
     const partners = await instance
-        .get('/partners')
-        .then((res) => {
-            return res.data;
+        .get('/admin/partners')
+        .then(({ data }) => {
+            return data?.partners;
         })
         .catch((error) => {
             console.error('Error: ', error);
@@ -14,7 +14,7 @@ export const getPartners = async () => {
 
 export const getPartner = async (id) => {
     const partner = await instance
-        .get(`/partners/${id}`)
+        .get(`/admin/partners/${id}`)
         .then((res) => {
             setTimeout(() => {
                 console.log('timeout');
@@ -29,7 +29,7 @@ export const getPartner = async (id) => {
 
 export const createPartner = async (partner) => {
     const newPartner = await instance
-        .post('/partners', partner)
+        .post('/admin/partners', partner)
         .then((res) => {
             return res.data;
         })
@@ -41,7 +41,7 @@ export const createPartner = async (partner) => {
 
 export const deletePartner = async (id) => {
     const partner = await instance
-        .delete(`/partners?id=${id}`)
+        .delete(`/admin/partners/${id}`)
         .then((res) => {
             return res.data;
         })
