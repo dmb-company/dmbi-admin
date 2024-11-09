@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
-import { useAdminStore, useAdminUpdateStore } from 'medusa-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { DialogComponent, Spinner } from '../common';
 import { PencilLineIcon } from 'lucide-react';
@@ -10,18 +9,19 @@ import AboutSection from './about-section';
 import StandeeSection from './standee-section';
 import GeneralInforSection from './general-infor-section';
 import SupportInforSection from './support-infor-section';
+import { useAdminStore, useUpdateStore } from '@/api/store/hook';
 
 const { Layout } = require('../layout');
 
 const StoreTemplate = () => {
     const { toast } = useToast();
 
-    const { store, isLoading } = useAdminStore();
-
-    const updateStore = useAdminUpdateStore();
+    const { data: store, isLoading } = useAdminStore();
+    const { mutate: updateStore } = useUpdateStore();
 
     const handleUpdate = (data) => {
-        updateStore.mutate(data, {
+        // console.log(data);
+        updateStore(data, {
             onSuccess: () => {
                 toast({
                     title: 'Đã cập nhập thông tin cửa hàng.',

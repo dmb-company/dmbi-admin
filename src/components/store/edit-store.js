@@ -4,8 +4,6 @@ import { useState } from 'react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { useForm } from 'react-hook-form';
-import ImageUpload from '../common/image-upload';
-import { useAdminUpdateStore } from 'medusa-react';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
 import { useToast } from '../ui/use-toast';
 import { uploadFile } from '@/lib/utils';

@@ -27,7 +27,6 @@ const PartnersTemplate = () => {
     const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
     const handleDeletePartner = (id) => {
-        console.log(id);
         setIsDeleteLoading(true);
         deletePartner(id, {
             onSuccess: () => {

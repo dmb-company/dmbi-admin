@@ -6,7 +6,7 @@ import { Input } from '../ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
 import { useForm } from 'react-hook-form';
 
-const MultipleInput = ({ setData, data }) => {
+const MultipleInput = ({ setData, data = [] }) => {
     const form = useForm({
         defaultValues: {
             data: [...data],
