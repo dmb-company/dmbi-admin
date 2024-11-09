@@ -4,7 +4,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
 import { useForm } from 'react-hook-form';
 import ImageUpload from '../common/image-upload';
 import { useState } from 'react';
-import { useAdminProducts } from 'medusa-react';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Button } from '../ui/button';
 import { Check, ChevronsUpDown } from 'lucide-react';
@@ -17,6 +16,7 @@ import {
     CommandList,
 } from '../ui/command';
 import { cn, uploadFile } from '@/lib/utils';
+import { useProducts } from '@/api/products/hook';
 
 const NewBannerCard = () => {
     const form = useForm({});
@@ -24,7 +24,7 @@ const NewBannerCard = () => {
     const [filesPC, setFilesPC] = useState([]);
     const [filesMB, setFilesMB] = useState([]);
     const { mutate: createBanner } = useCreateBanner();
-    const { products, isLoading } = useAdminProducts();
+    const { data: products, isLoading, error } = useProducts();
     console.log(products);
 
     const handleCreateBanner = (data) => {
@@ -48,7 +48,7 @@ const NewBannerCard = () => {
             image_mobile: await uploadFile(filesMB),
             product_id: products.find(
                 (product) => product.title === data.product_title
-            ).id,
+            )?.id,
         };
     };
 

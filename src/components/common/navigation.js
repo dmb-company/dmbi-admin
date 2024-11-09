@@ -2,8 +2,6 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import {
     Banana,
-    Home,
-    LineChart,
     Monitor,
     Package,
     Package2,
@@ -28,11 +26,6 @@ const navigationItems = [
         name: 'Danh mục',
         icon: Package,
         href: '/categories',
-    },
-    {
-        name: 'Bộ sưu tập',
-        icon: Package,
-        href: '/collections',
     },
     {
         name: 'Đối tác',

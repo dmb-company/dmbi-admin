@@ -39,3 +39,8 @@ export const uploadFiles = async (files) => {
     const urls = await uploadImagesToCloudinary(files);
     return urls;
 };
+
+export const uploadFile = async (files) => {
+    const url = await uploadFiles(files).then((res) => res[0]?.url);
+    return url;
+};

@@ -2,9 +2,9 @@ import { instance } from '@/contexts/axios';
 
 export const getBanners = async () => {
     const banners = await instance
-        .get('/banners')
-        .then((response) => {
-            return response.data;
+        .get('/admin/banners')
+        .then(({ data }) => {
+            return data?.banners;
         })
         .catch((err) => {
             console.log(err);
@@ -14,7 +14,7 @@ export const getBanners = async () => {
 
 export const createBanner = async (data) => {
     const banner = await instance
-        .post('/banners', data)
+        .post('/admin/banners', data)
         .then((response) => {
             return response.data;
         })
@@ -26,7 +26,7 @@ export const createBanner = async (data) => {
 
 export const deleteBanner = async (id) => {
     const banner = await instance
-        .delete(`/banners?id=${id}`)
+        .delete(`/admin/banners/${id}`)
         .then((response) => {
             return response.data;
         })
