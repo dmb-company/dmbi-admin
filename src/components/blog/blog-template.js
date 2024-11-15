@@ -15,8 +15,6 @@ import {
 import { useBlogPosts, useDeleteBlogPost } from '@/api/blog/hook';
 import Spinner from '../common/spinner';
 import { useToast } from '../ui/use-toast';
-import NewPostTemplate from './new-post-template';
-import DialogComponent from '../common/dialog';
 
 const BlogTemplate = () => {
     const { toast } = useToast();

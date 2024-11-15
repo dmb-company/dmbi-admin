@@ -2,7 +2,7 @@ import { instance } from '@/contexts/axios';
 
 export const createBlogCategory = async (category) => {
     const newCategory = await instance
-        .post('/blog-categories', category)
+        .post('/admin/article-categories', category)
         .then((res) => {
             return res.data;
         })
@@ -14,9 +14,9 @@ export const createBlogCategory = async (category) => {
 
 export const getBlogCategories = async () => {
     const categories = await instance
-        .get('/blog-categories')
-        .then((res) => {
-            return res.data;
+        .get('/admin/article-categories')
+        .then(({ data }) => {
+            return data?.articleCategories;
         })
         .catch((error) => {
             console.error('Error: ', error);
@@ -26,9 +26,9 @@ export const getBlogCategories = async () => {
 
 export const getBlogCategory = async (id) => {
     const blogCategory = await instance
-        .get(`/blog-categories/${id}`)
-        .then((res) => {
-            return res.data;
+        .get(`/admin/article-categories/${id}`)
+        .then(({ data }) => {
+            return data.data;
         })
         .catch((error) => {
             console.error('Error: ', error);
@@ -38,7 +38,7 @@ export const getBlogCategory = async (id) => {
 
 export const deleteBlogCategory = async (id) => {
     const deletedCategory = await instance
-        .delete(`/blog-categories?id=${id}`)
+        .delete(`/admin/article-categories/${id}`)
         .then((res) => {
             return res.data;
         })
@@ -62,7 +62,7 @@ export const updateBlogCategory = async (id, category) => {
 
 export const createPost = async (post) => {
     const newPost = await instance
-        .post('/posts', post)
+        .post('/admin/article', post)
         .then((res) => {
             return res.data;
         })
@@ -74,9 +74,9 @@ export const createPost = async (post) => {
 
 export const getPosts = async () => {
     const posts = await instance
-        .get('/posts')
-        .then((res) => {
-            return res.data;
+        .get('/admin/article')
+        .then(({ data }) => {
+            return data.articles;
         })
         .catch((error) => {
             console.error('Error: ', error);
@@ -86,9 +86,9 @@ export const getPosts = async () => {
 
 export const getPost = async (id) => {
     const post = await instance
-        .get(`/posts/${id}`)
-        .then((res) => {
-            return res.data;
+        .get(`/admin/article/${id}`)
+        .then(({ data }) => {
+            return data;
         })
         .catch((error) => {
             console.error('Error: ', error);
@@ -98,7 +98,7 @@ export const getPost = async (id) => {
 
 export const deletePost = async (id) => {
     const deletedPost = await instance
-        .delete(`/posts?id=${id}`)
+        .delete(`/admin/article/${id}`)
         .then((res) => {
             return res.data;
         })
@@ -110,7 +110,7 @@ export const deletePost = async (id) => {
 
 export const updatePost = async (id, post) => {
     const updatedPost = await instance
-        .put(`/posts?id=${id}`, post)
+        .put(`/admin/article/${id}`, post)
         .then((res) => {
             return res.data;
         })

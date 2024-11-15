@@ -21,6 +21,7 @@ import { useToast } from '@/components/ui/use-toast';
 import Spinner from '@/components/common/spinner';
 import ProductTagsSelector from './product-tags-selector';
 import { useCreateProduct } from '@/api/products/hook';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const NewProductTemplate = () => {
     // Image state
@@ -39,6 +40,7 @@ const NewProductTemplate = () => {
             originCountry: '',
             collection_id: '',
             tags: '',
+            isBestSeller: false,
             metadata: {
                 guarantee: '',
                 technology: '',
@@ -84,6 +86,7 @@ const NewProductTemplate = () => {
             description: description,
             tags: tagValues,
             categories: categories,
+            isBestSeller: data.isBestSeller,
             originCountry: data.originCountry,
             thumbnail: await uploadFiles(thumbnail).then((res) => res[0]?.url),
             images: {
@@ -315,6 +318,25 @@ const NewProductTemplate = () => {
                             <TextEditor
                                 description={description}
                                 setDescription={setDescription}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="isBestSeller"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                        <FormControl>
+                                            <Checkbox
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                        <div className="space-y-1 leading-none">
+                                            <FormLabel>
+                                                Đây là sản phẩm bán chạy.
+                                            </FormLabel>
+                                        </div>
+                                    </FormItem>
+                                )}
                             />
 
                             <Button type="submit">Tạo mới</Button>

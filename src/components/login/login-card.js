@@ -33,7 +33,7 @@ const LoginCard = () => {
     const handleLogin = async ({ email, password }) => {
         await login(email, password).then((res) => {
             if (!isLoading && !err) {
-                router.push('/products');
+                // router.push('/products');
             }
             return res;
         });

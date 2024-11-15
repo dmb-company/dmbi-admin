@@ -84,7 +84,7 @@ const NewBlogCategory = () => {
                     <button
                         onClick={form.handleSubmit(async (data) => {
                             setIsLoading(true);
-                            await uploadFile(files[0]).then((url) => {
+                            await uploadFile(files).then((url) => {
                                 handleCreateBlogCategory({
                                     ...data,
                                     image: url,
