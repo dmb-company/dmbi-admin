@@ -10,6 +10,7 @@ import StandeeSection from './standee-section';
 import GeneralInforSection from './general-infor-section';
 import SupportInforSection from './support-infor-section';
 import { useAdminStore, useUpdateStore } from '@/api/store/hook';
+import Policy from './policy';
 
 const { Layout } = require('../layout');
 
@@ -79,6 +80,7 @@ const StoreTemplate = () => {
                                 store={store}
                                 handleUpdate={handleUpdate}
                             />
+                            <Policy store={store} handleUpdate={handleUpdate} />
                             <SupportInforSection
                                 store={store}
                                 handleUpdate={handleUpdate}

@@ -14,8 +14,6 @@ import { useToast } from '../ui/use-toast';
 import { useAuth } from '@/hook/useAuth';
 import { Loader2, Lock, User } from 'lucide-react';
 import { Button } from '../ui/button';
-import { resolve } from 'styled-jsx/css';
-import { useState } from 'react';
 
 const LoginCard = () => {
     const router = useRouter();
@@ -33,7 +31,7 @@ const LoginCard = () => {
     const handleLogin = async ({ email, password }) => {
         await login(email, password).then((res) => {
             if (!isLoading && !err) {
-                // router.push('/products');
+                router.push('/products');
             }
             return res;
         });

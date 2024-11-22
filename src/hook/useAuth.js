@@ -20,7 +20,7 @@ export const useAuth = () => {
         setErr(false);
         try {
             await axios
-                .post(`${BASE_URL}/admin/login`, {
+                .post(`${process.env.NEXT_PUBLIC_BE_URL}/admin/login`, {
                     email,
                     password,
                 })

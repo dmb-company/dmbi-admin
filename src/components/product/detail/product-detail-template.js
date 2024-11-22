@@ -15,6 +15,7 @@ import {
     Thumbnail,
 } from '../detail';
 import { useProduct, useUpdateProduct } from '@/api/products/hook';
+import Specifications from './specifications';
 
 const ProductDetailTemplate = ({ params }) => {
     const { toast } = useToast();
@@ -65,6 +66,10 @@ const ProductDetailTemplate = ({ params }) => {
                             <Classify
                                 categories={product?.categories}
                                 tags={product?.tags}
+                                handleUpdate={handleUpdate}
+                            />
+                            <Specifications
+                                product={product}
                                 handleUpdate={handleUpdate}
                             />
                         </div>
