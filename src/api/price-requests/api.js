@@ -2,9 +2,9 @@ import { instance } from '@/contexts/axios';
 
 export const getPriceRequests = async () => {
     const priceRequests = await instance
-        .get('/price-quote')
-        .then((res) => {
-            return res.data;
+        .get('/admin/price-requests')
+        .then(({ data }) => {
+            return data.requests;
         })
         .catch((error) => {
             console.error('Error: ', error);
@@ -14,7 +14,7 @@ export const getPriceRequests = async () => {
 
 export const deletePriceRequest = async (id) => {
     const deletedRequest = await instance
-        .delete(`/price-quote?id=${id}`)
+        .delete(`/admin/price-requests/${id}`)
         .then((res) => {
             return res.data;
         })
@@ -22,4 +22,13 @@ export const deletePriceRequest = async (id) => {
             console.error('Error: ', error);
         });
     return deletedRequest;
+};
+
+export const updatePriceRequest = async ({ id, status }) => {
+    await instance
+        .put(`/admin/price-requests/${id}`, {
+            status,
+        })
+        .then((res) => res)
+        .catch((err) => console.log(err));
 };
