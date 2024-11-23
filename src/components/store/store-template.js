@@ -11,6 +11,7 @@ import GeneralInforSection from './general-infor-section';
 import SupportInforSection from './support-infor-section';
 import { useAdminStore, useUpdateStore } from '@/api/store/hook';
 import Policy from './policy';
+import CompanyPolicy from './company-policy';
 
 const { Layout } = require('../layout');
 
@@ -82,6 +83,10 @@ const StoreTemplate = () => {
                             />
                             <Policy store={store} handleUpdate={handleUpdate} />
                             <SupportInforSection
+                                store={store}
+                                handleUpdate={handleUpdate}
+                            />
+                            <CompanyPolicy
                                 store={store}
                                 handleUpdate={handleUpdate}
                             />

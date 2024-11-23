@@ -11,14 +11,15 @@ import {
 } from '../ui/table';
 
 import EditSupportInfor from './edit-support-infor';
+import EditCompanyPolicy from './edit-company-policy';
 
-const SupportInforSection = ({ store, handleUpdate }) => {
+const CompanyPolicy = ({ store, handleUpdate }) => {
     return (
         <div className="space-y-5 py-10">
             <div className="flex items-center space-x-1">
                 <CardTitle>
-                    <span>Thông tin hỗ trợ</span>
-                    <EditSupportInfor
+                    <span>Chính sách công ty</span>
+                    <EditCompanyPolicy
                         store={store}
                         handleUpdate={handleUpdate}
                     />
@@ -33,7 +34,7 @@ const SupportInforSection = ({ store, handleUpdate }) => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {store?.metadata?.support_info?.map((item, index) => {
+                        {store?.metadata?.company_policy?.map((item, index) => {
                             return (
                                 <TableRow key={index}>
                                     <TableCell className="min-w-[300px] font-medium">
@@ -50,4 +51,4 @@ const SupportInforSection = ({ store, handleUpdate }) => {
     );
 };
 
-export default SupportInforSection;
+export default CompanyPolicy;

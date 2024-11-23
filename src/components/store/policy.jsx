@@ -6,7 +6,7 @@ const Policy = ({ store, handleUpdate }) => {
     return (
         <div className="space-y-5 py-10">
             <div className="flex items-center space-x-1">
-                <CardTitle>Chính sách hỗ trợ khách hàng</CardTitle>
+                <CardTitle>Chính sách hỗ trợ sản phẩm</CardTitle>
                 <EditPolicy store={store} handleUpdate={handleUpdate} />
             </div>
             <ul className="space-y-2">
