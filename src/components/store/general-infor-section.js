@@ -3,6 +3,7 @@ import { CardTitle } from '../ui/card';
 import EditAddress from './edit-address';
 import { Label } from '../ui/label';
 import EditHotline from './edit-hotline';
+import EditSupportHotline from './edit-support-hotline';
 
 const GeneralInforSection = ({ store, handleUpdate }) => {
     return (
@@ -33,6 +34,17 @@ const GeneralInforSection = ({ store, handleUpdate }) => {
                     <div className="flex items-center space-x-2">
                         <Label className="text-lg">Hotline: </Label>
                         <span>{store?.metadata?.hotline}</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div className="flex items-center space-x-1 pb-5">
+                    <EditSupportHotline handleUpdate={handleUpdate} />
+                    <div className="flex items-center space-x-2">
+                        <Label className="text-lg">
+                            Hotline hỗ trợ kỹ thuật:{' '}
+                        </Label>
+                        <span>{store?.metadata?.support_hotline}</span>
                     </div>
                 </div>
             </div>
