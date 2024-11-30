@@ -33,7 +33,7 @@ const TextEditor = ({
     const config = {
         events: {
             'image.beforeUpload': async function (images) {
-                await uploadImagesToCloudinary(images)
+                await uploadImagesToCloudinary(Array.from(images))
                     .then((data) => {
                         // Insert the image into the editor
                         this.image.insert(

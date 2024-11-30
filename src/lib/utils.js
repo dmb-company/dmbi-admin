@@ -36,6 +36,7 @@ export const formatHandle = (handle) => {
 };
 
 export const uploadFiles = async (files) => {
+    console.log('files', files);
     const urls = await uploadImagesToCloudinary(files);
     return urls;
 };
